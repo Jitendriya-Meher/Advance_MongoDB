@@ -13,7 +13,9 @@ app.post("/register" , async (req,res) => {
     const {name} = req.body;
 
     const data = await userModel.create({
-        name
+        name,
+        email,
+        password
     });
 
     res.send(data);
@@ -48,6 +50,61 @@ app.get("/getsingleuserdata", async (req,res) => {
     });
 
     return res.status(200).send(userData);
+
+});
+
+// put request for update
+app.put("/updateuserdata/:id" , async (req,res) => {
+
+    const {id} = req.params;
+    const {email,password} = req.body;
+
+    const data = await userModel.findByIdAndUpdate({
+        _id:id
+    },{
+        email,
+        password
+    },{
+        new:true
+    });
+
+    return res.status(200).send(data);
+
+});
+
+
+app.put("/updateuserdata" , async (req,res) => {
+
+    const {email,password,id} = req.body;
+
+    const data = await userModel.findByIdAndUpdate({
+        _id:id
+    },{
+        email,
+        password
+    },{
+        new:true
+    });
+
+    return res.status(200).send(data);
+
+});
+
+
+app.put("/updateuserdatabyname" , async (req,res) => {
+
+    const {email,password,name} = req.body;
+
+    const data = await userModel.findOneAndUpdate({
+        name:name
+    },{
+        email,
+        password
+    },{
+        new:true
+    });
+
+    return res.status(200).send(data);
 
 });
 
