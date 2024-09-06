@@ -108,6 +108,30 @@ app.put("/updateuserdatabyname" , async (req,res) => {
 
 });
 
+// delete
+app.delete("/deleteuserbyid/:id", async (req,res) => {
+
+    const {id} = req.params;
+
+    const data = await userModel.findByIdAndDelete({
+        _id:id
+    });
+    
+    return res.status(200).send(data);
+
+});
+
+app.delete("/deleteuserbyname", async (req,res) => {
+
+    const {name} = req.body;
+
+    const data = await userModel.findOneAndDelete({
+        name:name
+    });
+    
+    return res.status(200).send(data);
+
+});
 
 app.listen(PORT , () => {
     console.log(`server start at port ${PORT}`);
